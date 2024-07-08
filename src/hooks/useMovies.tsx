@@ -3,13 +3,7 @@ import { baseApiUrl, apiKey } from "../constants";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export interface Movie {
-  id: number;
-  title: string;
-  overview: string;
-  poster_path: string;
-  release_date: string;
-}
+import { Movie } from "../types";
 
 export const useMovies = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
