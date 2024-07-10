@@ -10,23 +10,17 @@ export const useGetMedia = (mediaType: "movie" | "tv") => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  console.log("useGetMedia, mediaType: ", mediaType);
-
   useEffect(() => {
     const fetchMedia = async () => {
       try {
 
         const url = `${baseApiUrl}/${mediaType}/popular`;
 
-        console.log("useGetMedia, url: ", url)
-
         const response = await axios.get<ApiResponse<Media>>(url, {
             params: {
                 api_key: apiKey,
             },
         });
-
-        console.log("useGetMedia, response: ", response)
 
         setMedia(response.data.results);
       } catch (error) {

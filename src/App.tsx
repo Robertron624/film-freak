@@ -109,6 +109,14 @@ function App() {
             media={movies}
           />
         </section>
+        <section id='featured' className='mt-4'>
+          <h2 className='text-2xl font-bold text-slate-300'>Featured TV Shows</h2>
+          <MediaCarousel
+            loading={loadingTvShows}
+            error={errorTvShows}
+            media={tvShows}
+          />
+        </section>
       </main>
       <Footer />
     </>
