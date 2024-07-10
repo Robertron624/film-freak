@@ -1,22 +1,22 @@
 import { useState, useEffect } from 'react';
 
-interface MoviesPerPage {
+interface ItemsPerPageProps {
   mobile: number;
   tablet: number;
   desktop: number;
 }
 
-const useMoviesPerPage = (moviesPerPage: MoviesPerPage): number => {
-  const [itemsPerPage, setItemsPerPage] = useState(moviesPerPage.desktop);
+const useItemsPerPage = (cardPerPage: ItemsPerPageProps): number => {
+  const [itemsPerPage, setItemsPerPage] = useState(cardPerPage.desktop);
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
-        setItemsPerPage(moviesPerPage.mobile);
+        setItemsPerPage(cardPerPage.mobile);
       } else if (window.innerWidth < 1064) {
-        setItemsPerPage(moviesPerPage.tablet);
+        setItemsPerPage(cardPerPage.tablet);
       } else {
-        setItemsPerPage(moviesPerPage.desktop);
+        setItemsPerPage(cardPerPage.desktop);
       }
     };
 
@@ -24,9 +24,9 @@ const useMoviesPerPage = (moviesPerPage: MoviesPerPage): number => {
     handleResize();
 
     return () => window.removeEventListener('resize', handleResize);
-  }, [moviesPerPage]);
+  }, [cardPerPage]);
 
   return itemsPerPage;
 };
 
-export default useMoviesPerPage;
+export default useItemsPerPage;
