@@ -1,5 +1,6 @@
-import { useDispatch } from "react-redux";
-import { setSearch } from "../../slices/mediaSlice";
+
+import { useState } from "react";
+import { FilterTermSearch } from "../../types";
 
 const navLinks = [
   { title: "Home", path: "/" },
@@ -7,24 +8,37 @@ const navLinks = [
   { title: "Contact", path: "/contact" },
 ];
 
-const filterTermsSearch = [
+const filterTermsSearch: { label: string; value: FilterTermSearch }[]
+
+= [
   { label: "All", value: "all" },
-  { label: "Movies", value: "movies" },
-  { label: "TV Shows", value: "tv" },
+  { label: "Movie", value: "movie" },
+  { label: "TV Show", value: "tv" },
   { label: "People", value: "people" },
 ];
 
 export default function Header() {
 
-  const dispatch = useDispatch();
+  const [search, setSearch] = useState<string>('');
+  const [filter, setFilter] = useState<FilterTermSearch>('all');
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("Search term to be dispatched: ", e.target.value);
-    dispatch(setSearch(e.target.value));
+    setSearch(e.target.value);
   };
 
   const handleFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(e.target.value);
+    setFilter(e.target.value as FilterTermSearch);
+  };
+
+  const onSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    console.log(`Searching for ${search} in ${filter}`)
+
+    // Clear the search input and set the filter back to 'all' after searching
+    setSearch('');
+    setFilter('all');
+
   };
 
   return (
@@ -46,12 +60,16 @@ export default function Header() {
           ))}
         </ul>
       </nav>
-      <form className='flex items-center'>
+      <form 
+        className='flex items-center'
+        onSubmit={onSearch}
+      >
         <select
           name='filter'
           id='filter'
-          className='p-2 rounded-l-md border-r border-purple bg-slate-100 text-slate-400 focus:outline-none transition-all duration-300 ease-in-out'
+          className='p-2 rounded-l-md border-r h-10 border-purple bg-slate-100 text-slate-400 focus:outline-none transition-all duration-300 ease-in-out'
           onChange={handleFilter}
+          value={filter}
         >
           {filterTermsSearch.map((term) => (
             <option key={term.value} value={term.value}>
@@ -65,10 +83,11 @@ export default function Header() {
         <input
           type='text'
           placeholder='Search...'
-          className='p-2 rounded-r-md max-w-80 w-full bg-slate-100 text-slate-400 focus:outline-none transition-all duration-300 ease-in-out'
+          className='p-2 h-10 rounded-r-md max-w-80 w-full bg-slate-100 text-slate-400 focus:outline-none transition-all duration-300 ease-in-out'
           name='search'
           id='search'
           onChange={handleSearch}
+          value={search}
         />
       </form>
     </header>

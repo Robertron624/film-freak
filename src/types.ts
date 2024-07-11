@@ -42,4 +42,4 @@ export interface ApiResponse<T> {
   total_results: number;
 }
 
-export type FilterTermSearch = "All" | "Movies" | "TV Shows" | "People";
+export type FilterTermSearch = "all" | "movie" | "tv" | "people";
