@@ -1,5 +1,39 @@
 import { useState } from "react";
 
+// Material UI icons
+import EmailIcon from '@mui/icons-material/Email';
+import PhoneIcon from '@mui/icons-material/Phone';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import FacebookIcon from '@mui/icons-material/Facebook';
+
+const contactItems = [
+    {
+        icon: EmailIcon,
+        text: "Email",
+        link: "mailto:contact@filmfreak.com",
+        value: "contact@filmfreak.com",
+    },
+    {
+        icon: PhoneIcon,
+        text: "phone",
+        link: "tel:+1234567890",
+        value: "+1 (234) 567-890",
+    },
+    {
+        icon: TwitterIcon,
+        text: "Twitter",
+        link: "https://twitter.com/filmfreak",
+        value: "@filmfreak",
+    },
+    {
+        icon: FacebookIcon,
+        text: "Facebook",
+        link: "https://facebook.com/filmfreak",
+        value: "/filmfreak",
+    },
+];
+
+
 const Contact: React.FC = () => {
 
     const [formData, setFormData] = useState({
@@ -19,7 +53,7 @@ const Contact: React.FC = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        console.log(formData);
+        console.log("Data to be submitted", formData);
 
         alert("Form submitted!");
     };
@@ -32,46 +66,25 @@ const Contact: React.FC = () => {
                     Feel free to contact us at the following:
                 </p>
                 <ul className="flex flex-col gap-4 mt-20 text-left max-w-3xl mx-auto">
-                    <li>
-                        <a
-                            href="mailto:contact@filmfreak.com"
-                            className="text-slate-400"
-                        >
-                            Email: <span className="font-bold text-accent">
-                                contact@filmfreak.com
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="tel:+1234567890"
-                            className="text-slate-400"
-                        >
-                            Phone: <span className="font-bold text-accent">
-                                +1 (234) 567-890
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="https://twitter.com"
-                            className="text-slate-400"
-                        >
-                            Twitter: <span className="font-bold text-accent">
-                                @filmfreak
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="https://facebook.com"
-                            className="text-slate-400"
-                        >
-                            Facebook: <span className="font-bold text-accent">
-                                /filmfreak
-                            </span>
-                        </a>
-                    </li>
+                    {contactItems.map((item, index) => (
+                        <li key={index}>
+                            <a
+                                href={item.link}
+                                className="text-slate-400"
+                            >
+                                <item.icon
+                                    sx={{ fontSize: 20 }}
+                                    className="mr-2"
+                                />
+                                <span className="sr-only">
+                                    {item.text}
+                                </span>
+                                <span className="font-bold text-accent">
+                                    {item.value}
+                                </span>
+                            </a>
+                        </li>
+                    ))}
                 </ul>
                 <div>
                     <h2 className="text-2xl mt-20">

@@ -3,10 +3,14 @@ import { NavLink, useLocation } from "react-router-dom";
 
 import { FilterTermSearch } from "../../types";
 
+import HomeIcon from '@mui/icons-material/Home';
+import InfoIcon from '@mui/icons-material/Info';
+import ContactMailIcon from '@mui/icons-material/ContactMail';
+
 const navLinks = [
-  { title: "Home", path: "/" },
-  { title: "About", path: "/about" },
-  { title: "Contact", path: "/contact" },
+  { title: "Home", path: "/", icon: HomeIcon },
+  { title: "About", path: "/about", icon: InfoIcon },
+  { title: "Contact", path: "/contact", icon: ContactMailIcon },
 ];
 
 const filterTermsSearch: { label: string; value: FilterTermSearch }[] = [
@@ -56,13 +60,14 @@ export default function Header() {
           {navLinks.map((link) => (
             <li key={link.path}>
               <NavLink
-                className={`text-lg hover:text-slate-400 transition-all duration-300 ease-in-out border-b-2 ${
+                className={`text-lg hover:text-slate-400 transition-all duration-300 ease-in-out border-b-2 flex gap-1 items-center ${
                   location.pathname === link.path
                     ? "text-accent font-bold hover:text-accent border-accent"
                     : "text-slate-100 border-transparent hover:text-accent hover:border-accent"
                 }`}
                 to={link.path}
               >
+                <link.icon />
                 {link.title}
               </NavLink>
             </li>
