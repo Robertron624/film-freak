@@ -12,6 +12,8 @@ export default {
         'light-purple': 'rgb(83, 92, 145)',
         'lighter-purple': 'rgb(146, 144, 195)', 
         'accent': 'rgb(216, 165, 87)',
+        'accent-light': 'rgb(255, 235, 204)',
+        'accent-dark': 'rgb(168, 129, 68)',
       }
     },
   },
