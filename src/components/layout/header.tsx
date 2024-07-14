@@ -4,9 +4,8 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FilterTermSearch } from "../../types";
 
 import { Menu as MenuIcon, Home as HomeIcon, Info as InfoIcon, ContactMail as ContactMailIcon } from "@mui/icons-material";
-
-
-import { Drawer, IconButton, List, ListItem, ListItemText } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
+import { IconButton, List, ListItem, ListItemText, SwipeableDrawer} from "@mui/material";
 
 const navLinks = [
   { title: "Home", path: "/", icon: HomeIcon },
@@ -50,9 +49,14 @@ export default function Header() {
   };
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-    if (event.type === "keydown" && ((event as React.KeyboardEvent).key === "Tab" || (event as React.KeyboardEvent).key === "Shift")) {
+    if (
+      event &&
+      event.type === 'keydown' &&
+      ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')
+    ) {
       return;
     }
+
     setDrawerOpen(open);
   };
 
@@ -106,11 +110,42 @@ export default function Header() {
             }}
           />
         </IconButton>
-        <Drawer
+        <SwipeableDrawer
           anchor='right'
           open={drawerOpen}
           onClose={toggleDrawer(false)}
+          onOpen={() => {}}
+          sx={
+            {
+              ".MuiDrawer-paper": {
+                backgroundColor: "#4B5563",
+                color: "#D1D5DB",
+                width: "40%",
+                overflowX: "hidden",
+              },
+            }
+          }
+          disableSwipeToOpen
+          
         >
+          <div className='flex justify-end pr-2'>
+            <IconButton
+              onClick={toggleDrawer(false)}
+              color='secondary'
+              aria-label='close drawer'
+              edge='end'
+              sx={{
+                padding: "0px",
+              }}
+            >
+              <CloseIcon 
+                sx={{
+                  width: "2.5rem",
+                  height: "2.5rem",
+                }}
+              />
+            </IconButton>
+          </div>
           <List>
             {navLinks.map((link) => (
               <ListItem
@@ -120,13 +155,14 @@ export default function Header() {
                   navigate(link.path);
                   setDrawerOpen(false);
                 }}
+                className="flex gap-3"
               >
                 <link.icon />
                 <ListItemText primary={link.title} />
               </ListItem>
             ))}
           </List>
-        </Drawer>
+        </SwipeableDrawer>
       </div>
       <form className='flex items-center w-full md:w-auto' onSubmit={onSearch}> 
         <select
