@@ -34,16 +34,20 @@ const Home: React.FC = () => {
           The best place to find your favorite movies
         </p>
       </section>
-      <section id='featured-movies' className='mt-4'>
-        <h2 className='text-2xl font-bold text-slate-300'>Featured Movies</h2>
+      <section id='featured-movies' className='mt-8'>
+        <h2 className='text-2xl font-bold text-slate-300 lg:text-left text-center mb-6'>
+          Featured Movies
+        </h2>
         <MediaCarousel
           loading={loadingMovies}
           error={errorMovies}
           media={movies}
         />
       </section>
-      <section id='featured-tv' className='mt-4'>
-        <h2 className='text-2xl font-bold text-slate-300'>Featured TV Shows</h2>
+      <section id='featured-tv' className='mt-8'>
+        <h2 className='text-2xl font-bold text-slate-300 lg:text-left text-center mb-6'>
+          Featured TV Shows
+        </h2>
         <MediaCarousel
           loading={loadingTvShows}
           error={errorTvShows}

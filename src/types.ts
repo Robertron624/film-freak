@@ -1,9 +1,11 @@
-// types.ts
+
+export type MediaType = "movie" | "tv" | "person";
 export interface Movie {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
   id: number;
+  media_type: MediaType;
   original_language: string;
   original_title: string;
   overview: string;
@@ -22,6 +24,7 @@ export interface TVShow {
   first_air_date: string;
   genre_ids: number[];
   id: number;
+  media_type: MediaType;
   name: string;
   origin_country: string[];
   original_language: string;
@@ -33,7 +36,22 @@ export interface TVShow {
   vote_count: number;
 }
 
-export type Media = Movie | TVShow;
+export interface Person {
+  
+  adult: boolean
+  gender: number
+  id: number
+  known_for: Movie[] | TVShow[]
+  known_for_department: string
+  media_type: MediaType
+  name: string
+  original_name: string
+  popularity: number
+  profile_path: string
+}
+
+export type Media = Movie | TVShow | Person;
+
 
 export interface ApiResponse<T> {
   page: number;
