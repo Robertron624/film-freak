@@ -43,7 +43,6 @@ export default function MediaCarousel<T extends Movie | TVShow>({
     return (
       <Carousel
         animation='slide'
-        // height={400}
         swipe={true}
         autoPlay={false}
         navButtonsAlwaysVisible={true}
