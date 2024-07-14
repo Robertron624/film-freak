@@ -35,7 +35,9 @@ const Home: React.FC = () => {
         </p>
       </section>
       <section id='featured-movies' className='mt-4'>
-        <h2 className='text-2xl font-bold text-slate-300'>Featured Movies</h2>
+        <h2 className='text-2xl font-bold text-slate-300 lg:text-left text-center'>
+          Featured Movies
+        </h2>
         <MediaCarousel
           loading={loadingMovies}
           error={errorMovies}
@@ -43,7 +45,9 @@ const Home: React.FC = () => {
         />
       </section>
       <section id='featured-tv' className='mt-4'>
-        <h2 className='text-2xl font-bold text-slate-300'>Featured TV Shows</h2>
+        <h2 className='text-2xl font-bold text-slate-300 lg:text-left text-center'>
+          Featured TV Shows
+        </h2>
         <MediaCarousel
           loading={loadingTvShows}
           error={errorTvShows}

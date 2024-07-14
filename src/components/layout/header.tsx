@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 import { FilterTermSearch } from "../../types";
 
@@ -25,6 +25,7 @@ export default function Header() {
   const [filter, setFilter] = useState<FilterTermSearch>("all");
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -37,7 +38,9 @@ export default function Header() {
   const onSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(`Searching for ${search} in ${filter}`);
+    const searchUrl = `/search?query=${search}&filter=${filter}`;
+    // Navigate to the search results page
+    navigate(searchUrl);
 
     // Clear the search input and set the filter back to 'all' after searching
     setSearch("");
