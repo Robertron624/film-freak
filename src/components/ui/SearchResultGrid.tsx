@@ -1,28 +1,49 @@
 import Grid from "@mui/material/Unstable_Grid2";
 
-import { Media } from "../../types";
+import { Media} from "../../types";
+import { isMovie, isTVShow, isPerson } from "../../utils";
 
 interface MediaGridItemProps {
   media: Media;
 }
 
 export const MediaGridItem = ({ media }: MediaGridItemProps) => {
-  const title = 'title' in media ? media.title : media.name;
+  let title = "";
+  let mediaUrl = "";
+  let mediaImage = "";
+  let mediaOverview = "";
 
-  const mediaUrl = 'release_date' in media ? `/movies/${media.id}` : `/tv/${media.id}`;
-
-  const mediaPoster = media.poster_path
-    ? `https://image.tmdb.org/t/p/w500${media.poster_path}`
-    : '/images/no-image-available.png';
-
-  const mediaOverview = media.overview ? media.overview : 'No overview available';
+  if (isMovie(media)) {
+    title = media.title;
+    mediaUrl = `/movies/${media.id}`;
+    mediaImage = media.poster_path
+      ? `https://image.tmdb.org/t/p/w500${media.poster_path}`
+      : "/images/no-image-available.png";
+    mediaOverview = media.overview ? media.overview : "No overview available";
+  } else if (isTVShow(media)) {
+    title = media.name;
+    mediaUrl = `/tv-shows/${media.id}`;
+    mediaImage = media.poster_path
+      ? `https://image.tmdb.org/t/p/w500${media.poster_path}`
+      : "/images/no-image-available.png";
+    mediaOverview = media.overview ? media.overview : "No overview available";
+  } else if (isPerson(media)) {
+    title = media.name;
+    mediaUrl = `/people/${media.id}`;
+    mediaImage = media.profile_path
+      ? `https://image.tmdb.org/t/p/w500${media.profile_path}`
+      : "/images/no-image-available.png";
+    mediaOverview = media.known_for_department
+      ? media.known_for_department
+      : "No department available";
+  }
 
   return (
     <Grid xs={12} sm={6} md={4} lg={3}>
       <div className='movie-card w-11/12 text-slate-100 rounded-md bg-light-purple px-2 py-4 hover:scale-110 duration-700'>
         <a href={mediaUrl}>
           <img
-            src={mediaPoster}
+            src={mediaImage}
             alt={title}
             width={100}
             height={150}

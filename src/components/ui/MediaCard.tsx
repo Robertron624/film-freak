@@ -1,13 +1,14 @@
-import { Media } from "../../types";
+import { Movie, TVShow } from "../../types";
+import { isMovie } from "../../utils";
 
 interface MediaCardProps {
-  media: Media;
+  media: Movie | TVShow;
 }
 
 export const MediaCard = ({ media }: MediaCardProps) => {
 
-  const title = 'title' in media ? media.title : media.name; // title is a common property for both movies and tv shows
-  const mediaUrl = 'release_date' in media ? `/movies/${media.id}` : `/tv/${media.id}`; // URL Path for Movie and TVShow
+  const title = isMovie(media) ? media.title : media.name; // Title for Movie and TVShow
+  const mediaUrl = isMovie(media) ? `/movies/${media.id}` : `/tv-shows/${media.id}`; // URL for Movie and TVShow
 
   const mediaPoster = media.poster_path ? `https://image.tmdb.org/t/p/w500${media.poster_path}` : '/images/no-image-available.png';
   const mediaOverview = media.overview ? media.overview : 'No overview available';

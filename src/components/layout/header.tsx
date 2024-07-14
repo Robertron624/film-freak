@@ -50,15 +50,17 @@ export default function Header() {
   return (
     <header className='flex justify-between items-center w-11/12 bg-light-purple rounded-md px-4 py-2 mx-auto flex-wrap gap-2'>
       <nav className='flex gap-3 items-center'>
-        <figure className='flex items-center flex-shrink-0'>
-          <img
-            src='/images/logo.png'
-            alt='Logo'
-            className='md:w-16 md:h-16 w-12 h-12 rounded-md '
-            width={64}
-            height={64}
-          />
-        </figure>
+        <a href="/" className='flex items-center flex-shrink-0'>
+          <figure >
+            <img
+              src='/images/logo.png'
+              alt='Logo'
+              className='md:w-16 md:h-16 w-12 h-12 rounded-md '
+              width={64}
+              height={64}
+            />
+          </figure>
+        </a>
         <ul className='flex gap-4'>
           {navLinks.map((link) => (
             <li key={link.path}>

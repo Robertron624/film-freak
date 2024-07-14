@@ -2,15 +2,15 @@
 import Carousel from "react-material-ui-carousel";
 import { MediaCard } from "./MediaCard";
 
-import { Media } from "../../types";
+import { Movie, TVShow } from "../../types";
 import { chunkArray } from "../../utils";
 import useItemsPerPage from "../../hooks/useItemsPerPage";
 import { CircularProgress } from "@mui/material";
 
-interface CarouselProps {
+interface CarouselProps<T extends Movie | TVShow>  {
     loading: boolean;
     error: boolean;
-    media: Media[];
+    media: T[];
     moviesPerPage?: {
       mobile: number;
       tablet: number;
@@ -18,12 +18,12 @@ interface CarouselProps {
     };
   }
   
-export default function MediaCarousel({
+export default function MediaCarousel<T extends Movie | TVShow>({
     loading,
     error,
     media,
     moviesPerPage = { mobile: 1, tablet: 3, desktop: 4 },
-  }: CarouselProps) {
+  }: CarouselProps<T>) {
     const itemsPerPage = useItemsPerPage(moviesPerPage);
   
     if (loading) {
