@@ -43,17 +43,21 @@ export default function MediaCarousel<T extends Movie | TVShow>({
     return (
       <Carousel
         animation='slide'
-        height={400}
+        // height={400}
         swipe={true}
         autoPlay={false}
         navButtonsAlwaysVisible={true}
-        className='carousel-movies'
+        indicatorContainerProps={{
+          style: {
+            marginTop: "20px",
+          },
+        }}
       >
         {pages.length > 0 ? (
           pages.map((page, pageIndex) => (
             <div
               key={pageIndex}
-              className='wrapper-movies flex items-center h-full gap-3 lg:gap-0'
+              className='flex items-center h-full gap-3 lg:gap-0'
               style={{ display: "flex", justifyContent: "space-around" }}
             >
               {page.map((media) => (
