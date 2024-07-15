@@ -6,9 +6,9 @@ interface Genre {
   name: string;
 }
 
-interface ProductionCompany {
+export interface ProductionCompany {
   id: number;
-  logo_path: string;
+  logo_path?: string;
   name: string;
   origin_country: string;
 }
@@ -22,7 +22,7 @@ interface BelongsToCollection {
 export interface Movie {
   adult: boolean;
   backdrop_path: string;
-  belongs_to_collection: BelongsToCollection;
+  belongs_to_collection?: BelongsToCollection;
   genres: Genre[];
   id: number;
   media_type: MediaType;
@@ -45,11 +45,14 @@ export interface Movie {
 export interface TVShow {
   adult: boolean;
   backdrop_path: string;
+  episode_run_time: number[];
   first_air_date: string;
   genres: Genre[];
   id: number;
   media_type: MediaType;
   name: string;
+  number_of_episodes: number;
+  number_of_seasons: number;
   origin_country: string[];
   original_language: string;
   original_name: string;

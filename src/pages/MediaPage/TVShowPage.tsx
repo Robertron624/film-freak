@@ -1,27 +1,46 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import { CircularProgress } from '@mui/material';
+
 import { TVShow } from '../../types';
-import { apiKey } from '../../constants';
+
+import { useFetchMedia } from '../../hooks/useFetchMedia';
+import { Poster, MediaDetails } from '../../components/ui/MediaPageComponents';
 
 export default function TVShowPage() {
   const { id } = useParams<{ id: string }>();
-  const [tvShow, setTVShow] = useState<TVShow | null>(null);
 
-  useEffect(() => {
-    const fetchTVShow = async () => {
-      const response = await axios.get(`https://api.themoviedb.org/3/tv/${id}?api_key=${apiKey}`);
-      setTVShow(response.data);
-    };
-    fetchTVShow();
-  }, [id]);
+  const { data: tvShow, loading, error } = useFetchMedia<TVShow>(
+    `https://api.themoviedb.org/3/tv/${id}`
+  );
 
-  if (!tvShow) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div className='mt-16 flex justify-center'>
+        <CircularProgress color='secondary' size={100} thickness={5} />
+      </div>
+    );
+
+  if (error) return <div>Error: {error}</div>;
+
+  console.log("tvShow", tvShow);
 
   return (
-    <div>
-      <h1>{tvShow.name}</h1>
-      {/* Add more details */}
+    <div className='grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-2'>
+      <Poster imageUrl={tvShow?.poster_path || ''} title={tvShow?.name || ''} />
+      <MediaDetails
+        title={tvShow?.name || ''}
+        releaseDate={tvShow?.first_air_date || ''}
+        genres={tvShow?.genres || []}
+        overview={tvShow?.overview || ''}
+        runtime={tvShow?.episode_run_time[0]}
+        language={tvShow?.original_language || ''}
+        country={tvShow?.origin_country[0] || ''}
+        productionCompanies={tvShow?.production_companies || []}
+        rating={tvShow?.vote_average || 0}
+        voteCount={tvShow?.vote_count || 0}
+        numberOfEpisodes={tvShow?.number_of_episodes || 0}
+        numberOfSeasons={tvShow?.number_of_seasons || 0}
+      />
     </div>
   );
 }
