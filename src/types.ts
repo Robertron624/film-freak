@@ -36,13 +36,13 @@ export interface TVShow {
   vote_count: number;
 }
 
+export type PersonKnowForDepartment = "Acting" | "Directing" | "Writing" | "Production" | "Crew" | "Visual Effects" | "Sound" | "Costume & Make-Up" | "Art" | "Editing" | "Camera" | "Creator" | "Lighting" | "Actors" | "Production Management" | "Costume Design" | "Directorial" | "Visual Effects Supervisor" | "Costume Supervisor" | "Makeup Artist" | "Hairstylist" | "Makeup & Hair" | "Costume Design" | "Costume Supervisor"
 export interface Person {
-  
   adult: boolean
   gender: number
   id: number
   known_for: Movie[] | TVShow[]
-  known_for_department: string
+  known_for_department: PersonKnowForDepartment
   media_type: MediaType
   name: string
   original_name: string

@@ -9,10 +9,15 @@ interface FetchSearchParams {
   filter: string;
 }
 
+interface ErrorDetails {
+  message: string;
+  status?: number;
+}
+
 interface SearchState {
   searchResults: Media[];
   loading: boolean;
-  error: string | null;
+  error: ErrorDetails | null;
 }
 
 const initialState: SearchState = {
@@ -24,7 +29,7 @@ const initialState: SearchState = {
 export const fetchSearchResults = createAsyncThunk<
   Media[],
   FetchSearchParams,
-  { rejectValue: string }
+  { rejectValue: ErrorDetails }
 >(
   "search/fetchSearchResults",
   async ({ query, filter }, { rejectWithValue }) => {
@@ -39,9 +44,14 @@ export const fetchSearchResults = createAsyncThunk<
       return response.data.results;
     } catch (error) {
       if (error instanceof AxiosError) {
-        return rejectWithValue(error.message);
+        return rejectWithValue({
+          message: error.message,
+          status: error.response?.status,
+        });
       }
-      return rejectWithValue("An unexpected error occurred");
+      return rejectWithValue({
+        message: "Something went wrong",
+      });
     }
   }
 );
@@ -62,7 +72,7 @@ const searchSlice = createSlice({
         })
         .addCase(fetchSearchResults.rejected, (state, action) => {
           state.loading = false;
-          state.error = action.payload || 'Something went wrong';
+          state.error = action.payload as ErrorDetails;
         });
     },
   });

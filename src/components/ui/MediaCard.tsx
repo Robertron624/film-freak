@@ -14,7 +14,7 @@ export const MediaCard = ({ media }: MediaCardProps) => {
   const mediaOverview = media.overview ? media.overview : 'No overview available';
 
   return (
-    <div className='movie-card w-[240px] text-slate-100 rounded-md bg-light-purple px-2 py-4'>
+    <div className='w-[240px] text-slate-100 rounded-md bg-light-purple px-2 py-4'>
       <a href={mediaUrl}>
         <img
           src={mediaPoster}

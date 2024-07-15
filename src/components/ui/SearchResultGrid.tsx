@@ -1,7 +1,7 @@
 import Grid from "@mui/material/Unstable_Grid2";
 
 import { Media} from "../../types";
-import { isMovie, isTVShow, isPerson } from "../../utils";
+import { isMovie, isTVShow, isPerson, getProffesionFromDepartment } from "../../utils";
 
 interface MediaGridItemProps {
   media: Media;
@@ -28,21 +28,20 @@ export const MediaGridItem = ({ media }: MediaGridItemProps) => {
       : "/images/no-image-available.png";
     mediaOverview = media.overview ? media.overview : "No overview available";
   } else if (isPerson(media)) {
+
     title = media.name;
     mediaUrl = `/people/${media.id}`;
     mediaImage = media.profile_path
       ? `https://image.tmdb.org/t/p/w500${media.profile_path}`
       : "/images/no-image-available.png";
     mediaOverview = media.known_for_department
-      ? media.known_for_department
+      ? getProffesionFromDepartment(media.known_for_department)
       : "No department available";
   }
 
-  console.log("media: ", media);
-
   return (
     <Grid xs={12} sm={6} md={4} lg={3}>
-      <div className='movie-card w-11/12 text-slate-100 rounded-md bg-light-purple px-2 py-4 hover:scale-110 duration-700'>
+      <div className='w-full text-slate-100 rounded-md bg-light-purple px-2 py-4 hover:scale-110 duration-700'>
         <a href={mediaUrl}>
           <img
             src={mediaImage}
