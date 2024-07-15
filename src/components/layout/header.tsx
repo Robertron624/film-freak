@@ -40,7 +40,6 @@ export default function Header() {
     e.preventDefault();
 
     const searchUrl = `/search?query=${search}&filter=${filter}`;
-    // Navigate to the search results page
     navigate(searchUrl);
 
     // Clear the search input and set the filter back to 'all' after searching
@@ -79,7 +78,7 @@ export default function Header() {
             {navLinks.map((link) => (
               <li key={link.path}>
                 <NavLink
-                  className={`text-lg hover:text-slate-400 transition-all duration-300 ease-in-out border-b-2 flex gap-1 items-center ${
+                  className={`text-lg hover:text-accent transition-all duration-300 ease-in-out border-b-2 flex gap-1 items-center ${
                     location.pathname === link.path
                       ? "text-accent font-bold hover:text-accent border-accent"
                       : "text-slate-100 border-transparent hover:text-accent hover:border-accent"
@@ -101,6 +100,7 @@ export default function Header() {
           sx={{
             padding: "0px",
             display: { md: "none" },
+            marginRight: "0px"
           }}
         >
           <MenuIcon 
@@ -121,7 +121,7 @@ export default function Header() {
                 backgroundColor: "#4B5563",
                 color: "#D1D5DB",
                 width: "40%",
-                overflowX: "hidden",
+                paddingTop: "1rem",
               },
             }
           }
@@ -136,6 +136,7 @@ export default function Header() {
               edge='end'
               sx={{
                 padding: "0px",
+                marginRight: "0px"
               }}
             >
               <CloseIcon 

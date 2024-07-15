@@ -38,6 +38,8 @@ export const MediaGridItem = ({ media }: MediaGridItemProps) => {
       : "No department available";
   }
 
+  console.log("media: ", media);
+
   return (
     <Grid xs={12} sm={6} md={4} lg={3}>
       <div className='movie-card w-11/12 text-slate-100 rounded-md bg-light-purple px-2 py-4 hover:scale-110 duration-700'>
