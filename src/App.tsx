@@ -5,12 +5,17 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 
-// pages imports
+// static pages
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import SearchResults from "./pages/SearchResults";
 import NotFound from "./pages/NotFound";
+
+// dynamic pages (media)
+import MoviePage from "./pages/MediaPage/MoviePage";
+import TVShowPage from "./pages/MediaPage/TVShowPage";
+import PersonPage from "./pages/MediaPage/PersonPage";
 
 function App() {
 
@@ -24,6 +29,9 @@ function App() {
           <Route path='/about' element={<About />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/search' element={<SearchResults />} />
+          <Route path='/movies/:id' element={<MoviePage />} />
+          <Route path='/tv-shows/:id' element={<TVShowPage />} />
+          <Route path='/people/:id' element={<PersonPage />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
         </main>
