@@ -8,7 +8,14 @@ export const chunkArray = <T>(array: T[], size: number): T[][] => {
   return result;
 };
 
-export const isMovie = (media: Media): media is Movie => media.media_type === "movie";
-export const isTVShow = (media: Media): media is TVShow => media.media_type === "tv";
-export const isPerson = (media: Media): media is Person =>
-  media.media_type === "person";
+export function isMovie(media: Media): media is Movie {
+  return (media as Movie).title !== undefined;
+}
+
+export function isTVShow(media: Media): media is TVShow {
+  return (media as TVShow).name !== undefined && (media as TVShow).poster_path !== undefined;
+}
+
+export function isPerson(media: Media): media is Person {
+  return (media as Person).profile_path !== undefined;
+}

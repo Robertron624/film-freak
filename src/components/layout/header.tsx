@@ -3,9 +3,9 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 import { FilterTermSearch } from "../../types";
 
-import HomeIcon from '@mui/icons-material/Home';
-import InfoIcon from '@mui/icons-material/Info';
-import ContactMailIcon from '@mui/icons-material/ContactMail';
+import { Menu as MenuIcon, Home as HomeIcon, Info as InfoIcon, ContactMail as ContactMailIcon } from "@mui/icons-material";
+import CloseIcon from '@mui/icons-material/Close';
+import { IconButton, List, ListItem, ListItemText, SwipeableDrawer} from "@mui/material";
 
 const navLinks = [
   { title: "Home", path: "/", icon: HomeIcon },
@@ -23,6 +23,7 @@ const filterTermsSearch: { label: string; value: FilterTermSearch }[] = [
 export default function Header() {
   const [search, setSearch] = useState<string>("");
   const [filter, setFilter] = useState<FilterTermSearch>("all");
+  const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -39,7 +40,6 @@ export default function Header() {
     e.preventDefault();
 
     const searchUrl = `/search?query=${search}&filter=${filter}`;
-    // Navigate to the search results page
     navigate(searchUrl);
 
     // Clear the search input and set the filter back to 'all' after searching
@@ -47,9 +47,21 @@ export default function Header() {
     setFilter("all");
   };
 
+  const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+    if (
+      event &&
+      event.type === 'keydown' &&
+      ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')
+    ) {
+      return;
+    }
+
+    setDrawerOpen(open);
+  };
+
   return (
     <header className='flex justify-between items-center w-11/12 bg-light-purple rounded-md px-4 py-2 mx-auto flex-wrap gap-2'>
-      <nav className='flex gap-3 items-center'>
+      <div className="flex gap-2 w-full md:w-auto justify-between md:justify-start items-center">
         <a href="/" className='flex items-center flex-shrink-0'>
           <figure >
             <img
@@ -61,29 +73,103 @@ export default function Header() {
             />
           </figure>
         </a>
-        <ul className='flex gap-4'>
-          {navLinks.map((link) => (
-            <li key={link.path}>
-              <NavLink
-                className={`text-lg hover:text-slate-400 transition-all duration-300 ease-in-out border-b-2 flex gap-1 items-center ${
-                  location.pathname === link.path
-                    ? "text-accent font-bold hover:text-accent border-accent"
-                    : "text-slate-100 border-transparent hover:text-accent hover:border-accent"
-                }`}
-                to={link.path}
+        <nav className='hidden md:flex gap-3 items-center'>
+          <ul className='flex gap-4'>
+            {navLinks.map((link) => (
+              <li key={link.path}>
+                <NavLink
+                  className={`text-lg hover:text-accent transition-all duration-300 ease-in-out border-b-2 flex gap-1 items-center ${
+                    location.pathname === link.path
+                      ? "text-accent font-bold hover:text-accent border-accent"
+                      : "text-slate-100 border-transparent hover:text-accent hover:border-accent"
+                  }`}
+                  to={link.path}
+                >
+                  <link.icon />
+                  {link.title}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <IconButton
+          onClick={toggleDrawer(true)}
+          color='secondary'
+          aria-label='open drawer'
+          edge='end'
+          sx={{
+            padding: "0px",
+            display: { md: "none" },
+            marginRight: "0px"
+          }}
+        >
+          <MenuIcon 
+            sx={{
+              width: "2.5rem",
+              height: "2.5rem",
+            }}
+          />
+        </IconButton>
+        <SwipeableDrawer
+          anchor='right'
+          open={drawerOpen}
+          onClose={toggleDrawer(false)}
+          onOpen={() => {}}
+          sx={
+            {
+              ".MuiDrawer-paper": {
+                backgroundColor: "#4B5563",
+                color: "#D1D5DB",
+                width: "40%",
+                paddingTop: "1rem",
+              },
+            }
+          }
+          disableSwipeToOpen
+          
+        >
+          <div className='flex justify-end pr-2'>
+            <IconButton
+              onClick={toggleDrawer(false)}
+              color='secondary'
+              aria-label='close drawer'
+              edge='end'
+              sx={{
+                padding: "0px",
+                marginRight: "0px"
+              }}
+            >
+              <CloseIcon 
+                sx={{
+                  width: "2.5rem",
+                  height: "2.5rem",
+                }}
+              />
+            </IconButton>
+          </div>
+          <List>
+            {navLinks.map((link) => (
+              <ListItem
+                button
+                key={link.path}
+                onClick={() => {
+                  navigate(link.path);
+                  setDrawerOpen(false);
+                }}
+                className="flex gap-3"
               >
                 <link.icon />
-                {link.title}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      <form className='flex items-center' onSubmit={onSearch}>
+                <ListItemText primary={link.title} />
+              </ListItem>
+            ))}
+          </List>
+        </SwipeableDrawer>
+      </div>
+      <form className='flex items-center w-full md:w-auto' onSubmit={onSearch}> 
         <select
           name='filter'
           id='filter'
-          className='p-2 rounded-l-md border-r h-10 border-purple bg-slate-100 text-slate-400 focus:outline-none transition-all duration-300 ease-in-out'
+          className='p-2 rounded-l-md border-r h-10 border-purple bg-slate-100 text-slate-400 focus:outline-none transition-all duration-300 ease-in-out w-[30%] md:w-auto'
           onChange={handleFilter}
           value={filter}
         >
@@ -99,7 +185,7 @@ export default function Header() {
         <input
           type='text'
           placeholder='Search...'
-          className='p-2 h-10 rounded-r-md max-w-80 w-full bg-slate-100 text-slate-400 focus:outline-none transition-all duration-300 ease-in-out'
+          className='p-2 h-10 rounded-r-md md:max-w-80 bg-slate-100 text-slate-400 focus:outline-none transition-all duration-300 ease-in-out w-[70%] md:w-auto'
           name='search'
           id='search'
           onChange={handleSearch}
