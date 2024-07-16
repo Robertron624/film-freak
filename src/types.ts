@@ -19,10 +19,15 @@ interface BelongsToCollection {
   poster_path: string;
   backdrop_path: string;
 }
+
+export type MediaStatus = "Rumored" | "Planned" | "In Production" | "Post Production" | "Released" | "Canceled";
+
+
 export interface Movie {
   adult: boolean;
   backdrop_path: string;
   belongs_to_collection?: BelongsToCollection;
+  budget?: number;
   genres: Genre[];
   id: number;
   media_type: MediaType;
@@ -36,6 +41,7 @@ export interface Movie {
   release_date: string;
   revenue: number;
   runtime: number;
+  status: MediaStatus;
   title: string;
   video: boolean;
   vote_average: number;
@@ -67,6 +73,10 @@ export interface TVShow {
 export type PersonKnowForDepartment = "Acting" | "Directing" | "Writing" | "Production" | "Crew" | "Visual Effects" | "Sound" | "Costume & Make-Up" | "Art" | "Editing" | "Camera" | "Creator" | "Lighting" | "Actors" | "Production Management" | "Costume Design" | "Directorial" | "Visual Effects Supervisor" | "Costume Supervisor" | "Makeup Artist" | "Hairstylist" | "Makeup & Hair" | "Costume Design" | "Costume Supervisor"
 export interface Person {
   adult: boolean
+  also_known_as: string[]
+  biography: string
+  birthday: string
+  deathday: string
   gender: number
   id: number
   known_for: Movie[] | TVShow[]
@@ -74,6 +84,7 @@ export interface Person {
   media_type: MediaType
   name: string
   original_name: string
+  place_of_birth: string
   popularity: number
   profile_path: string
 }

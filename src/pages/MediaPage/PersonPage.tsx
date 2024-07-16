@@ -1,27 +1,44 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { apiKey } from '../../constants';
-import { Person } from '../../types';
+import { useParams } from "react-router-dom";
+import { Person } from "../../types";
+import { useFetchMedia } from "../../hooks/useFetchMedia";
+import { CircularProgress } from "@mui/material";
+import { PersonDetails, Poster } from "../../components/ui/MediaPageComponents";
 
 export default function PersonPage() {
   const { id } = useParams<{ id: string }>();
-  const [person, setPerson] = useState<Person | null>(null);
+  const {
+    data: person,
+    loading,
+    error,
+  } = useFetchMedia<Person>(`https://api.themoviedb.org/3/person/${id}`);
 
-  useEffect(() => {
-    const fetchPerson = async () => {
-      const response = await axios.get(`https://api.themoviedb.org/3/person/${id}?api_key=${apiKey}`);
-      setPerson(response.data);
-    };
-    fetchPerson();
-  }, [id]);
+  if (loading)
+    return (
+      <div className='mt-16 flex justify-center'>
+        <CircularProgress color='secondary' size={100} thickness={5} />
+      </div>
+    );
 
-  if (!person) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
-    <div>
-      <h1>{person.name}</h1>
-      {/* Add more details */}
-    </div>
+    <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+    {person && (
+      <>
+        <Poster
+          imageUrl={person.profile_path}
+          name={person.name}
+        />
+        <PersonDetails
+          name={person.name}
+          biography={person.biography}
+          birthDate={person.birthday}
+          placeOfBirth={person.place_of_birth}
+          knownFor={person.known_for_department}
+          deathDay={person.deathday}
+        />
+      </>
+    )}
+  </div>
   );
 }

@@ -20,8 +20,6 @@ export default function MoviePage() {
     );
   if (error) return <div>Error: {error}</div>;
 
-  console.log("movie", movie);
-
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-2'>
       <Poster
@@ -42,6 +40,8 @@ export default function MoviePage() {
         voteCount={movie?.vote_count || 0}
         collectionName={movie?.belongs_to_collection?.name || ""}
         collectionImageUrl={movie?.belongs_to_collection?.poster_path || ""}
+        budget={movie?.budget}
+        status={movie?.status}
       />
     </div>
   );

@@ -2,11 +2,16 @@
 import React from "react";
 import StarRating from "./StarRating";
 
-import { ProductionCompany } from "../../types";
+import {
+  MediaStatus,
+  PersonKnowForDepartment,
+  ProductionCompany,
+} from "../../types";
 
 interface PosterProps {
   imageUrl: string;
-  title: string;
+  title?: string;
+  name?: string;
   width?: number;
   height?: number;
 }
@@ -39,6 +44,7 @@ interface MediaDetailsProps {
   language: string;
   country: string;
   revenue?: number;
+  budget?: number;
   productionCompanies: ProductionCompany[];
   rating: number;
   voteCount: number;
@@ -46,6 +52,7 @@ interface MediaDetailsProps {
   collectionImageUrl?: string;
   numberOfEpisodes?: number;
   numberOfSeasons?: number;
+  status?: MediaStatus;
 }
 
 export const MediaDetails: React.FC<MediaDetailsProps> = ({
@@ -57,6 +64,7 @@ export const MediaDetails: React.FC<MediaDetailsProps> = ({
   language,
   country,
   revenue,
+  budget,
   productionCompanies,
   rating,
   voteCount,
@@ -64,6 +72,7 @@ export const MediaDetails: React.FC<MediaDetailsProps> = ({
   collectionImageUrl,
   numberOfEpisodes,
   numberOfSeasons,
+    status,
 }) => {
   function getYearFromDate(date: string) {
     return date.split("-")[0];
@@ -80,7 +89,13 @@ export const MediaDetails: React.FC<MediaDetailsProps> = ({
     <div>
       <div>
         <h1 className='text-4xl font-bold text-white'>
-          {title} ({getYearFromDate(releaseDate)})
+          {title} ({getYearFromDate(releaseDate) || "TBA"})
+          {status && (
+            <span>
+                {" "}
+                - <span className='text-gray-400'>{status}</span>
+            </span>
+          )}
         </h1>
         <div className='flex gap-1 mt-2'>
           {genres.map((genre) => {
@@ -99,11 +114,13 @@ export const MediaDetails: React.FC<MediaDetailsProps> = ({
         <p className='text-gray-400 mt-2 text-xl'>{overview}</p>
       </div>
       <div className='flex flex-col mt-6 max-w-xl'>
-        {runtime && (
+        {runtime ? (
           <div className='grid grid-cols-2'>
             <span className='text-white font-bold'>Runtime: </span>
             <span className='text-gray-400'>{runtime} minutes</span>
           </div>
+        ) : (
+          <p className='font-bold'>No runtime available</p>
         )}
         <div className='grid grid-cols-2'>
           <span className='text-white font-bold'>Language: </span>
@@ -113,11 +130,21 @@ export const MediaDetails: React.FC<MediaDetailsProps> = ({
           <span className='text-white font-bold'>Country: </span>
           <span className='text-gray-400'>{country}</span>
         </div>
-        {revenue && (
+        {revenue ? (
           <div className='grid grid-cols-2'>
             <span className='text-white font-bold'>Global revenue: </span>
             <span className='text-gray-400'>{formatRevenue(revenue)}</span>
           </div>
+        ) : (
+          <p className='font-bold'>No revenue available</p>
+        )}
+        {budget ? (
+          <div className='grid grid-cols-2'>
+            <span className='text-white font-bold'>Budget: </span>
+            <span className='text-gray-400'>{formatRevenue(budget)}</span>
+          </div>
+        ) : (
+            <p className='font-bold'>No budget available</p>
         )}
         {numberOfEpisodes && (
           <>
@@ -136,7 +163,6 @@ export const MediaDetails: React.FC<MediaDetailsProps> = ({
         <h2 className='text-2xl font-bold text-white'>Production Companies</h2>
         <div className='grid grid-cols-2 gap-2 mt-6'>
           {productionCompanies.map((company) => {
-
             const hasLogo = company.logo_path !== null;
 
             return (
@@ -148,14 +174,18 @@ export const MediaDetails: React.FC<MediaDetailsProps> = ({
                   <img
                     src={`https://image.tmdb.org/t/p/w92${company.logo_path}`}
                     alt={company.name}
-                    width={46}
-                    height={46}
+                    width={96}
+                    height={96}
                     className='object-contain'
                   />
                 ) : (
-                  <span className='text-dark-purple font-bold'>{company.name}</span>
+                  <span className='text-dark-purple font-bold'>
+                    {company.name}
+                  </span>
                 )}
-                <span className='text-dark-purple'>{company.origin_country}</span>
+                <span className='text-dark-purple'>
+                  {company.origin_country}
+                </span>
               </div>
             );
           })}
@@ -183,6 +213,56 @@ export const MediaDetails: React.FC<MediaDetailsProps> = ({
           </div>
         </div>
       )}
+    </div>
+  );
+};
+
+interface PersonDetailsProps {
+  name: string;
+  biography: string;
+  birthDate: string;
+  placeOfBirth: string;
+  knownFor: PersonKnowForDepartment;
+  deathDay?: string;
+}
+
+export const PersonDetails: React.FC<PersonDetailsProps> = ({
+  name,
+  biography,
+  birthDate,
+  placeOfBirth,
+  knownFor,
+  deathDay,
+}) => {
+  function getYearFromDate(date: string) {
+    return date.split("-")[0];
+  }
+
+  return (
+    <div>
+      <div>
+        <h1 className='text-4xl font-bold text-white'>{name}</h1>
+        <div className='mt-2 text-gray-400'>
+          <span>
+            Born: {getYearFromDate(birthDate)} in {placeOfBirth}
+          </span>
+        </div>
+      </div>
+      <div className='mt-6'>
+        <h2 className='text-2xl font-bold text-white'>Biography</h2>
+        <p className='text-gray-400 mt-2 text-xl leading-8 overflow-auto h-96 md:h-[32rem]'>
+          {biography}
+        </p>
+      </div>
+      <div className='mt-8 flex flex-col gap-3'>
+        <p className='font-bold'>
+          Profession: <span className='font-normal'>{knownFor}</span>
+        </p>
+        <p className='font-bold'>
+          Still active:{" "}
+          <span className='font-normal'>{deathDay ? "No" : "Yes"}</span>
+        </p>
+      </div>
     </div>
   );
 };
