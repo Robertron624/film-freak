@@ -3,7 +3,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { Media} from "../../types";
 import { isMovie, isTVShow, isPerson, getProffesionFromDepartment } from "../../utils";
 
-import useLazyLoadImage from "./useLazyLoadImage";
+import useLazyLoadImage from "../../hooks/useLazyLoadImage";
 
 interface MediaGridItemProps {
   media: Media;

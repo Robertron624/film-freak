@@ -1,7 +1,7 @@
 // Poster.tsx
 import React from "react";
 import StarRating from "./StarRating";
-import useLazyLoadImage from "./useLazyLoadImage";
+import useLazyLoadImage from "../../hooks/useLazyLoadImage";
 
 import {
   MediaStatus,

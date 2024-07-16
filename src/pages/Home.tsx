@@ -26,9 +26,13 @@ const Home: React.FC = () => {
   return (
     <>
       <section className='intro text-slate-200'>
-        <h1 className='text-4xl text-center text-purple-700'>
+        <h1 
+          className='text-4xl text-center'
+        >
           Welcome to{" "}
-          <span className='text-accent text-5xl font-bold'>Film Freak</span>
+          <span 
+            className='text-accent text-5xl font-bold'
+          >Film Freak</span>
         </h1>
         <p className='text-lg text-center text-gray-500'>
           The best place to find your favorite movies
@@ -38,21 +42,25 @@ const Home: React.FC = () => {
         <h2 className='text-2xl font-bold text-slate-300 lg:text-left text-center mb-6'>
           Featured Movies
         </h2>
-        <MediaCarousel
-          loading={loadingMovies}
-          error={errorMovies}
-          media={movies}
-        />
+        <div className="min-h-[400px]">
+          <MediaCarousel
+            loading={loadingMovies}
+            error={errorMovies}
+            media={movies}
+          />
+        </div>
       </section>
       <section id='featured-tv' className='mt-8'>
         <h2 className='text-2xl font-bold text-slate-300 lg:text-left text-center mb-6'>
           Featured TV Shows
         </h2>
-        <MediaCarousel
-          loading={loadingTvShows}
-          error={errorTvShows}
-          media={tvShows}
-        />
+        <div className="min-h-[400px]">
+          <MediaCarousel
+            loading={loadingTvShows}
+            error={errorTvShows}
+            media={tvShows}
+          />
+        </div>
       </section>
     </>
   );
