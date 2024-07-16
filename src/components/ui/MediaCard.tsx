@@ -1,6 +1,8 @@
+import React from "react";
 import { Movie, TVShow } from "../../types";
 import { isMovie } from "../../utils";
 import useLazyLoadImage from "./useLazyLoadImage";
+
 
 interface MediaCardProps {
   media: Movie | TVShow;
@@ -17,7 +19,9 @@ export const MediaCard = ({ media }: MediaCardProps) => {
   const imgRef = useLazyLoadImage(mediaPoster);
 
   return (
-    <div className='w-[240px] text-slate-100 rounded-md bg-light-purple px-2 py-4'>
+    <div className='w-[240px] text-slate-100 rounded-md bg-light-purple px-2 py-4'
+      id={`media-card-${media.id}`} data-testid={`media-card-${media.id}`}
+    >
       <a href={mediaUrl}>
         <img
           ref={imgRef}

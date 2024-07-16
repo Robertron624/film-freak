@@ -20,6 +20,8 @@ export default function MoviePage() {
     );
   if (error) return <div>Error: {error}</div>;
 
+  console.log("movie", movie);
+
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-2'>
       <Poster

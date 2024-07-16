@@ -1,4 +1,5 @@
 
+import React from "react";
 import Carousel from "react-material-ui-carousel";
 import { MediaCard } from "./MediaCard";
 
@@ -28,7 +29,7 @@ export default function MediaCarousel<T extends Movie | TVShow>({
   
     if (loading) {
       return (
-        <div className='mt-16 flex justify-center'>
+        <div className='mt-16 flex justify-center' data-testid="loading-spinner">
           <CircularProgress color='secondary' size={100} thickness={5} />
         </div>
       );
@@ -60,7 +61,9 @@ export default function MediaCarousel<T extends Movie | TVShow>({
               style={{ display: "flex", justifyContent: "space-around" }}
             >
               {page.map((media) => (
-                <MediaCard key={media.id} media={media} />
+                <MediaCard 
+                  key={media.id} media={media} 
+                />
               ))}
             </div>
           ))
