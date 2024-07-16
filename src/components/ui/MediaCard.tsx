@@ -1,5 +1,6 @@
 import { Movie, TVShow } from "../../types";
 import { isMovie } from "../../utils";
+import useLazyLoadImage from "./useLazyLoadImage";
 
 interface MediaCardProps {
   media: Movie | TVShow;
@@ -13,15 +14,19 @@ export const MediaCard = ({ media }: MediaCardProps) => {
   const mediaPoster = media.poster_path ? `https://image.tmdb.org/t/p/w500${media.poster_path}` : '/images/no-image-available.png';
   const mediaOverview = media.overview ? media.overview : 'No overview available';
 
+  const imgRef = useLazyLoadImage(mediaPoster);
+
   return (
     <div className='w-[240px] text-slate-100 rounded-md bg-light-purple px-2 py-4'>
       <a href={mediaUrl}>
         <img
+          ref={imgRef}
           src={mediaPoster}
           alt={title}
           width={100}
           height={150}
           className='w-[100px] h-[150px] rounded-md object-contain mx-auto'
+          data-src={mediaPoster}
         />
         <div className='media-card-content text-center'>
           <h2 className='text-sm font-bold text-purple-700 mt-2 mb-3  text-accent text-ellipsis overflow-hidden max-h-14 line-clamp-1'>

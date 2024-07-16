@@ -22,8 +22,6 @@ export default function TVShowPage() {
 
   if (error) return <div>Error: {error}</div>;
 
-  console.log("tvShow", tvShow);
-
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-2'>
       <Poster imageUrl={tvShow?.poster_path || ''} title={tvShow?.name || ''} />

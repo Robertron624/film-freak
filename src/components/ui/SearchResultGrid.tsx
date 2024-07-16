@@ -3,6 +3,8 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { Media} from "../../types";
 import { isMovie, isTVShow, isPerson, getProffesionFromDepartment } from "../../utils";
 
+import useLazyLoadImage from "./useLazyLoadImage";
+
 interface MediaGridItemProps {
   media: Media;
 }
@@ -39,16 +41,19 @@ export const MediaGridItem = ({ media }: MediaGridItemProps) => {
       : "No department available";
   }
 
+  const imgRef = useLazyLoadImage(mediaImage);
+
   return (
     <Grid xs={12} sm={6} md={4} lg={3}>
       <div className='w-full text-slate-100 rounded-md bg-light-purple px-2 py-4 hover:scale-110 duration-700'>
         <a href={mediaUrl}>
           <img
-            src={mediaImage}
+            ref={imgRef}
             alt={title}
             width={100}
             height={150}
             className='w-[100px] h-[150px] rounded-md object-contain mx-auto'
+            data-src={mediaImage}
           />
           <div className='media-card-content text-center'>
             <h2 className='text-sm font-bold text-purple-700 mt-2 mb-3 text-accent text-ellipsis overflow-hidden max-h-14 line-clamp-1'>

@@ -1,6 +1,7 @@
 // Poster.tsx
 import React from "react";
 import StarRating from "./StarRating";
+import useLazyLoadImage from "./useLazyLoadImage";
 
 import {
   MediaStatus,
@@ -21,19 +22,58 @@ export const Poster: React.FC<PosterProps> = ({
   title,
   width = 500,
   height = 750,
-}) => (
-  <div className='poster-container'>
-    <figure>
-      <img
-        src={`https://image.tmdb.org/t/p/w500${imageUrl}`}
-        alt={title}
-        width={width}
-        height={height}
-        className='md:w-[500px] md:h-[750px] w-64 h-[400px] mx-auto md:mx-0 rounded-md'
-      />
-    </figure>
-  </div>
-);
+}) => {
+
+  const imgRef = useLazyLoadImage(`https://image.tmdb.org/t/p/w500${imageUrl}`);
+
+  return(
+    <div className='poster-container'>
+      <figure>
+        <img
+          alt={title}
+          width={width}
+          height={height}
+          className='md:w-[500px] md:h-[750px] w-64 h-[400px] mx-auto md:mx-0 rounded-md object-cover'
+          ref={imgRef}
+          data-src={`https://image.tmdb.org/t/p/w500${imageUrl}`}
+        />
+      </figure>
+    </div>
+  )
+};
+
+interface ProductionCompanyItemProps {
+  company: ProductionCompany;
+}
+
+export const ProductionCompanyItem: React.FC<ProductionCompanyItemProps> = ({
+  company,
+}) => {
+  const hasLogo = company.logo_path !== null;
+  const logoUrl = `https://image.tmdb.org/t/p/w92${company.logo_path}`;
+
+  const imgRef = useLazyLoadImage(logoUrl);
+
+  return (
+    <div
+      className='flex items-center justify-center gap-2 flex-col bg-slate-200 rounded-md py-3'
+    >
+      {hasLogo ? (
+        <img
+          ref={imgRef}
+          alt={company.name}
+          width={96}
+          height={96}
+          className='object-contain'
+          data-src={logoUrl}
+        />
+      ) : (
+        <span className='text-dark-purple font-bold'>{company.name}</span>
+      )}
+      <span className='text-dark-purple'>{company.origin_country}</span>
+    </div>
+  );
+};
 
 interface MediaDetailsProps {
   title: string;
@@ -163,30 +203,8 @@ export const MediaDetails: React.FC<MediaDetailsProps> = ({
         <h2 className='text-2xl font-bold text-white'>Production Companies</h2>
         <div className='grid grid-cols-2 gap-2 mt-6'>
           {productionCompanies.map((company) => {
-            const hasLogo = company.logo_path !== null;
-
             return (
-              <div
-                key={company.id}
-                className='flex items-center justify-center gap-2 flex-col bg-slate-200 rounded-md py-3'
-              >
-                {hasLogo ? (
-                  <img
-                    src={`https://image.tmdb.org/t/p/w92${company.logo_path}`}
-                    alt={company.name}
-                    width={96}
-                    height={96}
-                    className='object-contain'
-                  />
-                ) : (
-                  <span className='text-dark-purple font-bold'>
-                    {company.name}
-                  </span>
-                )}
-                <span className='text-dark-purple'>
-                  {company.origin_country}
-                </span>
-              </div>
+              <ProductionCompanyItem key={company.id} company={company} />
             );
           })}
         </div>
@@ -206,6 +224,7 @@ export const MediaDetails: React.FC<MediaDetailsProps> = ({
               width={90}
               height={90}
               className='object-contain'
+              
             />
             <p className='text-gray-400 max-w-20 text-center'>
               {collectionName}
