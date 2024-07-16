@@ -7,13 +7,6 @@ import { render, screen } from "@testing-library/react";
 import useItemsPerPage from "../../../hooks/useItemsPerPage";
 
 
-// import { MediaCard } from "../MediaCard";
-// import Carousel from "react-material-ui-carousel";
-
-// import { chunkArray } from "../../utils";
-// import useItemsPerPage from "../../hooks/useItemsPerPage";
-// import { CircularProgress } from "@mui/material";
-
 const mockMovies: Movie[] = [
   {
     adult: false,

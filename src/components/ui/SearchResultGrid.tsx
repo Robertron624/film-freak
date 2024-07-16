@@ -10,7 +10,7 @@ interface MediaGridItemProps {
   media: Media;
 }
 
-export const MediaGridItem = ({ media }: MediaGridItemProps) => {
+export const MediaGridItem = ({ media }: MediaGridItemProps): React.ReactElement => {
   let title = "";
   let mediaUrl = "";
   let mediaImage = "";

@@ -8,7 +8,7 @@ interface MediaCardProps {
   media: Movie | TVShow;
 }
 
-export const MediaCard = ({ media }: MediaCardProps) => {
+export const MediaCard = ({ media }: MediaCardProps): React.ReactElement => {
 
   const title = isMovie(media) ? media.title : media.name; // Title for Movie and TVShow
   const mediaUrl = isMovie(media) ? `/movies/${media.id}` : `/tv-shows/${media.id}`; // URL for Movie and TVShow

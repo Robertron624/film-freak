@@ -1,5 +1,6 @@
 
 import React from "react";
+
 import Carousel from "react-material-ui-carousel";
 import { MediaCard } from "./MediaCard";
 
@@ -24,7 +25,7 @@ export default function MediaCarousel<T extends Movie | TVShow>({
     error,
     media,
     moviesPerPage = { mobile: 1, tablet: 3, desktop: 4 },
-  }: CarouselProps<T>) {
+  }: CarouselProps<T>): React.ReactElement {
     const itemsPerPage = useItemsPerPage(moviesPerPage);
   
     if (loading) {

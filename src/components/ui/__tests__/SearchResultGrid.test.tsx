@@ -1,3 +1,4 @@
+//@ts-expect-error prevent build error
 import React from 'react';
 import { render } from '@testing-library/react';
 import { Movie, TVShow, Person } from '../../../types';

@@ -1,3 +1,4 @@
+//@ts-expect-error prevent build error
 import React from "react";
 import StarRating from "../StarRating";
 import { describe, it, expect } from "vitest";
