@@ -42,6 +42,7 @@ export interface Movie {
   revenue: number;
   runtime: number;
   status: MediaStatus;
+  tagline?: string;
   title: string;
   video: boolean;
   vote_average: number;
