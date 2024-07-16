@@ -9,7 +9,6 @@ Film Freak is a web application for searching movies, TV shows, and people, and 
 - [Features](#features)
 - [Testing](#testing)
 - [Author](#author)
-- [License](#license)
 
 ## Installation
 
@@ -48,6 +47,8 @@ To use the application, open your browser and navigate to `http://localhost:5137
 - Preview the production build:
     ```bash
     npm run preview
+    ```
+- Additionally, you can visit the [Live Site](https://robert-film-freak.netlify.app/)
 
 ## Features
 
