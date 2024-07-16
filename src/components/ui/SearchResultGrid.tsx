@@ -59,6 +59,10 @@ export const MediaGridItem = ({ media }: MediaGridItemProps) => {
           <div className='media-card-content text-center'>
             <h2 className='text-sm font-bold text-purple-700 mt-2 mb-3 text-accent text-ellipsis overflow-hidden max-h-14 line-clamp-1'>
               {title}
+              <span>
+                {isMovie(media) && ` (${media.release_date.slice(0, 4)})`}
+                {isTVShow(media) && ` (${media.first_air_date.slice(0, 4)})`}
+              </span>
             </h2>
             <p className='text-xs text-slate-200 mb-2 text-ellipsis overflow-hidden h-12 line-clamp-3'>
               {mediaOverview}
