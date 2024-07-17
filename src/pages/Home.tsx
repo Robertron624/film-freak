@@ -1,10 +1,10 @@
-import { useEffect } from "react";
+import { Suspense, useEffect, lazy } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { RootState, AppDispatch } from "../store";
 import { fetchMovies, fetchTvShows } from "../slices/mediaSlice";
 
-import MediaCarousel from "../components/ui/MediaCarousel";
+const MediaCarousel = lazy(() => import("../components/ui/MediaCarousel"));
 
 const Home: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -38,21 +38,29 @@ const Home: React.FC = () => {
         <h2 className='text-2xl font-bold text-slate-300 lg:text-left text-center mb-6'>
           Featured Movies
         </h2>
-        <MediaCarousel
-          loading={loadingMovies}
-          error={errorMovies}
-          media={movies}
-        />
+        <div className='min-h-[322px]'>
+          <Suspense fallback={<div>Loading...</div>}>
+            <MediaCarousel
+              loading={loadingMovies}
+              error={errorMovies}
+              media={movies}
+            />
+          </Suspense>
+        </div>
       </section>
       <section id='featured-tv' className='mt-8'>
         <h2 className='text-2xl font-bold text-slate-300 lg:text-left text-center mb-6'>
           Featured TV Shows
         </h2>
-        <MediaCarousel
-          loading={loadingTvShows}
-          error={errorTvShows}
-          media={tvShows}
-        />
+        <div className='min-h-[322px]'>
+          <Suspense fallback={<div>Loading...</div>}>
+            <MediaCarousel
+              loading={loadingTvShows}
+              error={errorTvShows}
+              media={tvShows}
+            />
+          </Suspense>
+        </div>
       </section>
     </>
   );

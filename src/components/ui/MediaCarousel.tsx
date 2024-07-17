@@ -1,8 +1,9 @@
 
-import React from "react";
+import React, {lazy, Suspense} from "react";
 
 import Carousel from "react-material-ui-carousel";
-import { MediaCard } from "./MediaCard";
+
+const MediaCard = lazy(() => import("./MediaCard"));
 
 import { Movie, TVShow } from "../../types";
 import { chunkArray } from "../../utils";
@@ -43,6 +44,11 @@ export default function MediaCarousel<T extends Movie | TVShow>({
     const pages = chunkArray(media, itemsPerPage);
   
     return (
+      <Suspense fallback={
+        <div className='mt-16 flex justify-center' data-testid="loading-spinner">
+          <CircularProgress color='secondary' size={100} thickness={5} />
+        </div>
+      }>
       <Carousel
         animation='slide'
         swipe={true}
@@ -51,6 +57,32 @@ export default function MediaCarousel<T extends Movie | TVShow>({
         indicatorContainerProps={{
           style: {
             marginTop: "20px",
+            // display: "flex",
+            // gap: "10px",
+            // justifyContent: "center",
+          },
+        }}
+        indicatorIconButtonProps={
+          {
+            style: {
+              padding: "9px",
+              color: "#fff",
+              fontSize: "1.5rem",
+            },
+            "aria-label": "Go to slide",
+          }
+        }
+        activeIndicatorIconButtonProps={
+          {
+            style: {
+              color: "#f50057",
+            },
+          }
+        }
+        sx={{
+          // set the indicators svg size to 1.5rem
+          ".MuiButtonBase-root .MuiSvgIcon-root.MuiSvgIcon-root[data-testid='FiberManualRecordIcon']": {
+            fontSize: "2.5rem",
           },
         }}
       >
@@ -72,5 +104,6 @@ export default function MediaCarousel<T extends Movie | TVShow>({
           <p>No movies found</p>
         )}
       </Carousel>
+      </Suspense>
     );
   }

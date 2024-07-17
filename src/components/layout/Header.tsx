@@ -169,12 +169,13 @@ export default function Header() {
         <select
           name='filter'
           id='filter'
-          className='p-2 rounded-l-md border-r h-10 border-purple bg-slate-100 text-slate-400 focus:outline-none transition-all duration-300 ease-in-out w-[30%] md:w-auto'
+          className='p-2 rounded-l-md border-r h-10 border-purple bg-slate-100 text-slate-900 focus:outline-none transition-all duration-300 ease-in-out w-[30%] md:w-auto'
           onChange={handleFilter}
           value={filter}
+          aria-label="Filter search"
         >
           {filterTermsSearch.map((term) => (
-            <option key={term.value} value={term.value}>
+            <option key={term.value} value={term.value} label={term.label} className="text-slate-950">
               {term.label}
             </option>
           ))}
@@ -185,7 +186,7 @@ export default function Header() {
         <input
           type='text'
           placeholder='Search...'
-          className='p-2 h-10 rounded-r-md md:max-w-80 bg-slate-100 text-slate-400 focus:outline-none transition-all duration-300 ease-in-out w-[70%] md:w-auto'
+          className='p-2 h-10 rounded-r-md md:max-w-80 bg-slate-100 text-slate-900 focus:outline-none transition-all duration-300 ease-in-out w-[70%] md:w-auto placeholder:text-slate-900'
           name='search'
           id='search'
           onChange={handleSearch}

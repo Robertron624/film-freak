@@ -1,6 +1,6 @@
 //@ts-expect-error need to add React to global scope
 import React from "react";
-import { MediaCard } from "../MediaCard";
+import  MediaCard from "../MediaCard";
 import { Movie } from "../../../types";
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
